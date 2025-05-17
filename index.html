@@ -8,37 +8,43 @@
     <!-- Tailwind via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
   </head>
 
-  <body
-    class="min-h-screen flex items-center justify-center relative overflow-hidden"
-  >
-    <!-- dynamic sky gradient -->
+  <body class="relative w-full h-full">
+    <!-- Background -->
     <div
       id="sky-bg"
       class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-300 transition-colors duration-1000"
     ></div>
 
     <!-- SUN scene -->
-    <div id="sunScene" class="sky-scene hide">
+    <div id="sunScene" class="sky-scene hide absolute inset-0 pointer-events-none">
       <div class="cloud cloud-a"></div>
       <div class="sun"></div>
       <div class="cloud cloud-b"></div>
     </div>
 
     <!-- MOON scene -->
-    <div id="moonScene" class="sky-scene hide">
+    <div id="moonScene" class="sky-scene hide absolute inset-0 pointer-events-none">
       <div class="moon-wrap">
         <div class="star star-1"></div>
         <div class="star star-2"></div>
       </div>
     </div>
 
-    <!-- card wrapper with outer padding -->
-    <div class="z-20 w-full px-4 sm:px-6 md:px-8">
-      <!-- card -->
+    <!-- Centered Card -->
+    <div class="relative z-20 flex items-center justify-center w-full h-full px-4">
       <div
-        class="bg-white shadow-xl rounded-xl p-6 w-full max-w-md mx-auto text-center"
+        class="bg-white shadow-xl rounded-xl p-6 w-full max-w-md text-center"
       >
         <h1 class="text-2xl font-bold mb-4">TimeStats</h1>
         <h2 id="city-name" class="text-xl font-semibold mb-2"></h2>

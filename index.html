@@ -23,18 +23,18 @@
     <!-- Background -->
     <div
       id="sky-bg"
-      class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-300 transition-colors duration-1000"
+      class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-300 transition-colors duration-1000 z-0"
     ></div>
 
     <!-- SUN scene -->
-    <div id="sunScene" class="sky-scene hide absolute inset-0 pointer-events-none">
+    <div id="sunScene" class="sky-scene hide absolute top-4 right-4 z-10 pointer-events-none">
       <div class="cloud cloud-a"></div>
       <div class="sun"></div>
       <div class="cloud cloud-b"></div>
     </div>
 
     <!-- MOON scene -->
-    <div id="moonScene" class="sky-scene hide absolute inset-0 pointer-events-none">
+    <div id="moonScene" class="sky-scene hide absolute top-4 right-4 z-10 pointer-events-none">
       <div class="moon-wrap">
         <div class="star star-1"></div>
         <div class="star star-2"></div>
@@ -43,9 +43,7 @@
 
     <!-- Centered Card -->
     <div class="relative z-20 flex items-center justify-center w-full h-full px-4">
-      <div
-        class="bg-white shadow-xl rounded-xl p-6 w-full max-w-md text-center"
-      >
+      <div class="bg-white shadow-xl rounded-xl p-6 w-full max-w-md text-center">
         <h1 class="text-2xl font-bold mb-4">TimeStats</h1>
         <h2 id="city-name" class="text-xl font-semibold mb-2"></h2>
         <p id="status" class="text-lg">Getting your location…</p>

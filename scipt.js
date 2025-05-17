@@ -79,8 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lat = pos.coords.latitude;
     const lng = pos.coords.longitude;
     loadSun(lat, lng);
-loadWeather(lat, lng);
-
+    loadWeather(lat, lng);
 
     try {
       const response = await fetch(
@@ -137,8 +136,7 @@ loadWeather(lat, lng);
       cityName.textContent = `${name}, ${country}`;
       status.textContent = "🌐 City data loaded.";
       loadSun(latitude, longitude);
-loadWeather(latitude, longitude);
-
+      loadWeather(latitude, longitude);
     } catch {
       status.textContent = "⚠️ Error looking up city.";
     }
@@ -197,4 +195,3 @@ function weatherCodeDescription(code) {
   };
   return map[code] || "Unknown";
 }
-

@@ -47,7 +47,29 @@
         }catch{status.textContent="⚠️ Error retrieving sun data.";}
       }
 
-      function geoSuccess(pos){loadSun(pos.coords.latitude,pos.coords.longitude);}
+      async function geoSuccess(pos) {
+  const lat = pos.coords.latitude;
+  const lng = pos.coords.longitude;
+  loadSun(lat, lng);
+
+  try {
+    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lng}&language=en`);
+    const geoData = await geoRes.json();
+
+    if (geoData && geoData.results && geoData.results.length > 0) {
+      const location = geoData.results[0];
+      const city = location.name || location.admin1 || "Unknown City";
+      const country = location.country || "Unknown Country";
+      cityName.textContent = `${city}, ${country}`;
+    } else {
+      cityName.textContent = "Current Location";
+    }
+  } catch (e) {
+    console.error("Reverse geocoding failed", e);
+    cityName.textContent = "Current Location";
+  }
+}
+
       function geoError(){status.textContent="Please turn on your location";}
 
       navigator.geolocation?navigator.geolocation.getCurrentPosition(geoSuccess,geoError):

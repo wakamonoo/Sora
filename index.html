@@ -38,36 +38,78 @@
       </div>
     </div>
 
-    <!-- Centered Card -->
-    <div
-      class="relative z-20 flex items-center justify-center w-full h-full px-4"
-    >
-      <div
-        class="bg-white shadow-xl rounded-xl p-6 w-full max-w-md text-center"
-      >
-        <h1 class="text-2xl font-bold mb-4">Sora</h1>
-        <h2 id="city-name" class="text-xl font-semibold mb-2"></h2>
-        <p id="status" class="text-lg">Getting your location…</p>
-        <p id="extra" class="text-sm text-gray-500 mt-2"></p>
-        <p id="weather" class="text-md text-gray-700 mt-2"></p>
+   <!-- Replace Centered Card section with this -->
+<div class="relative z-20 flex items-center justify-center w-full h-full px-4">
+  <div class="relative bg-white/95 backdrop-blur-lg rounded-[20px] p-8 w-full max-w-md text-center border border-white/40 shadow-2xl space-y-4 transition-all duration-500 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)]">
+    <!-- Glowing background effect -->
+    <div class="absolute inset-0 rounded-[20px] bg-gradient-to-br from-blue-50/20 to-cyan-50/10 -z-10"></div>
+    
+    <!-- Title with subtle underline -->
+    <div class="mb-6">
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent pb-2 relative">
+        SORA
+        <div class="absolute bottom-0 left-1/2 w-24 h-[2px] bg-gradient-to-r from-transparent via-blue-400/80 to-transparent -translate-x-1/2"></div>
+      </h1>
+    </div>
 
-        <div class="mt-4 flex gap-2">
-          <input
-            id="city-input"
-            type="text"
-            placeholder="Enter city"
-            class="flex-1 min-w-0 border border-gray-300 rounded px-2 py-1"
-          />
-
-          <button
-            id="city-btn"
-            class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
-          >
-            Go
-          </button>
+    <div class="space-y-5">
+      <h2 id="city-name" class="text-xl font-medium text-gray-700/90 tracking-tight"></h2>
+      <div class="py-3 space-y-4">
+        <p id="status" class="text-gray-600/90 font-normal transition-opacity">Getting your location...</p>
+        <div class="flex justify-center space-x-2">
+          <div class="w-2.5 h-2.5 bg-cyan-500/90 rounded-full animate-[pulse_1.2s_ease-in-out_infinite]"></div>
+          <div class="w-2.5 h-2.5 bg-cyan-500/90 rounded-full animate-[pulse_1.2s_ease-in-out_infinite_0.4s]"></div>
+          <div class="w-2.5 h-2.5 bg-cyan-500/90 rounded-full animate-[pulse_1.2s_ease-in-out_infinite_0.8s]"></div>
         </div>
+        <p id="extra" class="text-sm text-gray-600/70 mt-1 font-sans"></p>
+        <p id="weather" class="text-3xl font-semibold text-gray-800/90 mt-3 tracking-tighter bg-gradient-to-r from-blue-600/90 to-cyan-600/90 bg-clip-text text-transparent"></p>
       </div>
     </div>
+
+    <div class="mt-8 space-y-3">
+      <div class="flex gap-2 transition-all">
+        <input
+          id="city-input"
+          type="text"
+          placeholder="Search city..."
+          class="flex-1 min-w-0 bg-white/90 border border-gray-200/80 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-500/80 focus:outline-none focus:ring-2 focus:ring-cyan-400/30 focus:border-cyan-400/50 transition-all shadow-sm text-lg"
+        />
+        <button
+          id="city-btn"
+          class="bg-gradient-to-br from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg active:scale-95 transition-all duration-300 flex items-center justify-center"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add to your style.css -->
+<style>
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(0.9); opacity: 0.4; }
+  }
+  
+  .animate-pulse {
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+
+  .rounded-[20px] {
+    border-radius: 20px;
+  }
+
+  input::placeholder {
+    letter-spacing: -0.5px;
+  }
+
+  #city-btn:hover {
+    transform: translateY(-1px);
+  }
+</style>
 
     <script src="scipt.js"></script>
   </body>

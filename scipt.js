@@ -48,7 +48,7 @@
       }
 
       function geoSuccess(pos){loadSun(pos.coords.latitude,pos.coords.longitude);}
-      function geoError(){status.textContent="Unable to retrieve your location.";}
+      function geoError(){status.textContent="Please turn on your location";}
 
       navigator.geolocation?navigator.geolocation.getCurrentPosition(geoSuccess,geoError):
                              geoError();

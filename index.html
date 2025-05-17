@@ -1,145 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Luma</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luma</title>
 
-  <!-- Tailwind via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-  <!-- Sun / Moon CSS (no @apply) -->
-  <style>
-    /* ---------- shared layout ---------- */
-    .sky-scene   {position:absolute; top:1rem; right:1rem; width:220px; height:220px; pointer-events:none; transition:opacity 1s;}
-    .sky-scene.hide {opacity:0; visibility:hidden;}
+  <body
+    class="min-h-screen flex items-center justify-center relative overflow-hidden"
+  >
+    <!-- dynamic sky gradient -->
+    <div
+      id="sky-bg"
+      class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-300 transition-colors duration-1000"
+    ></div>
 
-    /* ---------- SUN + CLOUDS ---------- */
-    .sun        {width:120px; height:120px; border-radius:50%; background:#ffa600;
-                 box-shadow:0 0 10px #ffa600,0 0 60px #ffa600,0 0 160px #ffea00, inset 0 0 40px #ffea00;
-                 position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);}
-    .cloud      {width:70px; height:70px; background:#fff; border-radius:50%; position:absolute; filter:blur(3px); opacity:.8;}
-    .cloud::before,.cloud::after{content:""; position:absolute; background:#fff; border-radius:50%;}
-    .cloud::before{width:55px; height:55px; top:-25px; left:35px;}
-    .cloud::after {width:120px; height:60px; top:-50px; left:45px;}
-    .cloud-a    {left:-30px; top:10px; animation:cloud 18s linear infinite;}
-    .cloud-b    {right:-40px; top:30px; animation:cloud 20s linear reverse infinite;}
-    @keyframes cloud{from{transform:translateX(-60px)}to{transform:translateX(60px)}}
-
-    /* ---------- MOON + STARS ---------- */
-    .moon-wrap  {width:160px; height:160px; border-radius:50%; position:absolute; top:50%; left:50%;
-                 transform:translate(-50%,-50%); background:#e2e8f0;
-                 box-shadow:0 0 12px 2px rgba(229,229,229,.3),5px 0 12px 4px rgba(229,229,229,.2);}
-    .moon-wrap::after{content:""; position:absolute; background:rgba(162,162,162,.8); width:32px; height:32px;
-                      border-radius:50%; left:95px; top:30px; box-shadow:5px 35px 0 -4px rgba(162,162,162,.85);}
-    .star{position:absolute; width:4px; height:4px; border-radius:50%; background:#fff; animation:pulse infinite ease-in-out;}
-    .star-1{top:15px; left:-5px; box-shadow:0 0 3px 1px #fff, -70px 90px 2px 0 #fff, 140px 90px 2px 0 #fff;}
-    .star-2{top:60px; left:-35px; background:#ff0; box-shadow:0 0 4px 1px #ff0, 180px 60px 2px 0 #ff0, -90px 30px 2px 0 #ff0;}
-    @keyframes pulse{0%,100%{opacity:0.1}50%{opacity:1}}
-  </style>
-</head>
-
-<body class="min-h-screen flex items-center justify-center relative overflow-hidden">
-  <!-- dynamic sky gradient -->
-  <div id="sky-bg" class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-300 transition-colors duration-1000"></div>
-
-  <!-- SUN scene -->
-  <div id="sunScene"  class="sky-scene hide">
-    <div class="cloud cloud-a"></div>
-    <div class="sun"></div>
-    <div class="cloud cloud-b"></div>
-  </div>
-
-  <!-- MOON scene -->
-  <div id="moonScene" class="sky-scene hide">
-    <div class="moon-wrap">
-      <div class="star star-1"></div>
-      <div class="star star-2"></div>
+    <!-- SUN scene -->
+    <div id="sunScene" class="sky-scene hide">
+      <div class="cloud cloud-a"></div>
+      <div class="sun"></div>
+      <div class="cloud cloud-b"></div>
     </div>
-  </div>
 
-  <!-- card -->
-  <div class="z-20 bg-white shadow-xl rounded-xl p-6 w-full max-w-md text-center">
-    <h1 class="text-2xl font-bold mb-4">TimeStats</h1>
-    <h2 id="city-name" class="text-xl font-semibold mb-2"></h2>
-    <p  id="status"    class="text-lg">Getting your location…</p>
-    <p  id="extra"     class="text-sm text-gray-500 mt-2"></p>
-    <div class="mt-4 flex gap-2">
-      <input id="city-input" type="text" placeholder="Enter city"
-             class="flex-1 border border-gray-300 rounded px-2 py-1" />
-      <button id="city-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Go</button>
+    <!-- MOON scene -->
+    <div id="moonScene" class="sky-scene hide">
+      <div class="moon-wrap">
+        <div class="star star-1"></div>
+        <div class="star star-2"></div>
+      </div>
     </div>
-  </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const status    = document.getElementById("status");
-      const extra     = document.getElementById("extra");
-      const cityInput = document.getElementById("city-input");
-      const cityBtn   = document.getElementById("city-btn");
-      const cityName  = document.getElementById("city-name");
-      const sky       = document.getElementById("sky-bg");
-      const sunScene  = document.getElementById("sunScene");
-      const moonScene = document.getElementById("moonScene");
+    <!-- card wrapper with outer padding -->
+    <div class="z-20 w-full px-4 sm:px-6 md:px-8">
+      <!-- card -->
+      <div
+        class="bg-white shadow-xl rounded-xl p-6 w-full max-w-md mx-auto text-center"
+      >
+        <h1 class="text-2xl font-bold mb-4">TimeStats</h1>
+        <h2 id="city-name" class="text-xl font-semibold mb-2"></h2>
+        <p id="status" class="text-lg">Getting your location…</p>
+        <p id="extra" class="text-sm text-gray-500 mt-2"></p>
+        <div class="mt-4 flex gap-2">
+          <input
+            id="city-input"
+            type="text"
+            placeholder="Enter city"
+            class="flex-1 border border-gray-300 rounded px-2 py-1"
+          />
+          <button
+            id="city-btn"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+          >
+            Go
+          </button>
+        </div>
+      </div>
+    </div>
 
-      let tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-      const fmt = (d,t)=>d.toLocaleTimeString("en-US",{timeZone:t});
-      const fmtPH = d=>d.toLocaleTimeString("en-US",{timeZone:"Asia/Manila"});
-      const fmtFull=(d,t)=>d.toLocaleString("en-US",{timeZone:t});
-
-      function showScene(dayPhase){              // swap sky colours & scene visibility
-        const map={
-          night:"from-gray-900 to-black",
-          dawn :"from-orange-200 to-yellow-300",
-          day  :"from-sky-300   to-blue-500",
-          dusk :"from-purple-600 to-pink-400"
-        };
-        sky.className=`absolute inset-0 bg-gradient-to-br ${map[dayPhase]} transition-colors duration-1000`;
-
-        if(dayPhase==="night"){moonScene.classList.remove("hide"); sunScene.classList.add("hide");}
-        else                  {sunScene.classList.remove("hide"); moonScene.classList.add("hide");}
-      }
-
-      function updatePhase(now,sunrise,sunset){
-        if(now<sunrise){showScene("night");status.textContent="🌌 It's before sunrise.";}
-        else if(now-sunrise<600000){showScene("dawn");status.textContent="🌄 The sun is rising.";}
-        else if(now<sunset){showScene("day");status.textContent="🌞 It's daytime.";}
-        else if(now-sunset<600000){showScene("dusk");status.textContent="🌇 The sun is setting.";}
-        else{showScene("night");status.textContent="🌙 It's nighttime.";}
-      }
-
-      async function loadSun(lat,lng){
-        try{
-          const data=await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`).then(r=>r.json());
-          const now=new Date(), sunrise=new Date(data.results.sunrise), sunset=new Date(data.results.sunset);
-          updatePhase(now,sunrise,sunset);
-          extra.innerHTML=
-            `<div>Sunrise: ${fmt(sunrise,tz)} | Sunset: ${fmt(sunset,tz)}</div>
-             <div class="mt-1">Current time there: ${fmtFull(now,tz)}</div>
-             <div class="text-xs text-gray-400 mt-1">(PH Time — Sunrise: ${fmtPH(sunrise)}, Sunset: ${fmtPH(sunset)}, Current: ${fmtPH(now)})</div>`;
-        }catch{status.textContent="⚠️ Error retrieving sun data.";}
-      }
-
-      function geoSuccess(pos){loadSun(pos.coords.latitude,pos.coords.longitude);}
-      function geoError(){status.textContent="Unable to retrieve your location.";}
-
-      navigator.geolocation?navigator.geolocation.getCurrentPosition(geoSuccess,geoError):
-                             geoError();
-
-      cityBtn.addEventListener("click",async()=>{
-        const city=cityInput.value.trim();
-        if(!city){status.textContent="Please enter a city name.";return;}
-        status.textContent="🔎 Searching…"; extra.textContent="";
-        try{
-          const g=await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`).then(r=>r.json());
-          if(!g.results||!g.results.length){status.textContent="City not found.";return;}
-          const {latitude,longitude,name,country,timezone}=g.results[0];
-          tz=timezone||tz; cityName.textContent=`${name}, ${country}`; status.textContent="🌐 City data loaded.";
-          loadSun(latitude,longitude);
-        }catch{status.textContent="⚠️ Error looking up city.";}
-      });
-    });
-  </script>
-</body>
+    <script src="scipt.js"></script>
+  </body>
 </html>

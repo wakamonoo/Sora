@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tz
       )}</div>
              <div class="mt-1">Current time there: ${fmtFull(now, tz)}</div>
-             <div class="text-xs text-blue-400 mt-1">(PH Time — Sunrise: ${fmtPH(
+             <div class="text-xs text-orange-400 mt-1">(PH Time — Sunrise: ${fmtPH(
                sunrise
              )}, Sunset: ${fmtPH(sunset)}, Current: ${fmtPH(now)})</div>`;
     } catch {

@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sky = document.getElementById("sky-bg");
   const sunScene = document.getElementById("sunScene");
   const moonScene = document.getElementById("moonScene");
-  
 
   let tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -17,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const fmtFull = (d, t) => d.toLocaleString("en-US", { timeZone: t });
 
   function showScene(dayPhase) {
-    // swap sky colours & scene visibility
     const map = {
       night: "from-gray-900 to-black",
       dawn: "from-orange-200 to-yellow-300",
@@ -88,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       const data = await response.json();
 
-      // Try to get city/town/village, fallback to state
       const address = data.address;
       const city =
         address.city ||

@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Formatting functions
   const fmt = (d, t) => d.toLocaleTimeString("en-US", { timeZone: t });
-  const fmtPH = (d) => d.toLocaleTimeString("en-US", { timeZone: "Asia/Manila" });
+  const fmtPH = (d) =>
+    d.toLocaleTimeString("en-US", { timeZone: "Asia/Manila" });
   const fmtFull = (d, t) => d.toLocaleString("en-US", { timeZone: t });
 
   // Weather configuration (daytime only)
@@ -20,8 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "Clear sky": "from-sky-400 to-blue-600",
     "Mainly clear": "from-blue-300 to-indigo-500",
     "Partly cloudy": "from-gray-200 to-gray-400",
-    "Overcast": "from-slate-400 to-slate-600",
-    "Fog": "from-stone-400 to-stone-600",
+    Overcast: "from-slate-400 to-slate-600",
+    Fog: "from-stone-400 to-stone-600",
     "Depositing rime fog": "from-slate-300 to-slate-500",
     "Light drizzle": "from-slate-400 to-slate-600",
     "Moderate drizzle": "from-slate-500 to-slate-700",
@@ -32,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Slight snow fall": "from-gray-200 to-gray-400",
     "Moderate snow fall": "from-gray-300 to-gray-500",
     "Heavy snow fall": "from-gray-400 to-gray-600",
-    "Thunderstorm": "from-purple-900 to-gray-900",
+    Thunderstorm: "from-purple-900 to-gray-900",
     "Thunderstorm with slight hail": "from-stone-800 to-stone-900",
     "Thunderstorm with heavy hail": "from-stone-900 to-black",
   };
@@ -44,26 +45,46 @@ document.addEventListener("DOMContentLoaded", () => {
       late_night: "from-gray-800 via-gray-700 to-gray-900",
       dawn: "from-purple-800 via-orange-600 to-amber-200",
       day: weatherBgMap[weatherDescription] || "from-sky-400 to-blue-500",
-      dusk: "from-amber-400 via-red-600 to-purple-900"
+      dusk: "from-amber-400 via-red-600 to-purple-900",
     };
 
     // Force dark themes for night phases
     const gradient = phaseMap[dayPhase];
     sky.className = `absolute inset-0 bg-gradient-to-b ${gradient} transition-all duration-3000`;
 
-    moonScene.classList.toggle("hide", !["night", "late_night"].includes(dayPhase));
-    sunScene.classList.toggle("hide", !["dawn", "day", "dusk"].includes(dayPhase));
+    moonScene.classList.toggle(
+      "hide",
+      !["night", "late_night"].includes(dayPhase)
+    );
+    sunScene.classList.toggle(
+      "hide",
+      !["dawn", "day", "dusk"].includes(dayPhase)
+    );
 
     // Celestial visibility with smooth transitions
-    moonScene.classList.toggle("opacity-100", ["night", "late_night"].includes(dayPhase));
-    moonScene.classList.toggle("opacity-0", !["night", "late_night"].includes(dayPhase));
-    sunScene.classList.toggle("opacity-100", ["dawn", "day", "dusk"].includes(dayPhase));
-    sunScene.classList.toggle("opacity-0", !["dawn", "day", "dusk"].includes(dayPhase));
+    moonScene.classList.toggle(
+      "opacity-100",
+      ["night", "late_night"].includes(dayPhase)
+    );
+    moonScene.classList.toggle(
+      "opacity-0",
+      !["night", "late_night"].includes(dayPhase)
+    );
+    sunScene.classList.toggle(
+      "opacity-100",
+      ["dawn", "day", "dusk"].includes(dayPhase)
+    );
+    sunScene.classList.toggle(
+      "opacity-0",
+      !["dawn", "day", "dusk"].includes(dayPhase)
+    );
   }
 
   function updatePhase(now, sunrise, sunset, weatherDescription) {
-    const astronomicalTwilight = 3600000 * 1.5; 
-    const hourBeforeSunrise = new Date(sunrise.getTime() - astronomicalTwilight);
+    const astronomicalTwilight = 3600000 * 1.5;
+    const hourBeforeSunrise = new Date(
+      sunrise.getTime() - astronomicalTwilight
+    );
     const hourAfterSunset = new Date(sunset.getTime() + astronomicalTwilight);
 
     if (now < hourBeforeSunrise) {
@@ -78,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (now < sunset) {
       showScene("day", weatherDescription);
       status.textContent = "🌞 Daylight Hours";
-    } else if (now - sunset < 3600000) { 
+    } else if (now - sunset < 3600000) {
       showScene("dusk", weatherDescription);
       status.textContent = "🌇 Evening Golden Hour";
     } else if (now < hourAfterSunset) {

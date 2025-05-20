@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sky = document.getElementById("sky-bg");
   const sunScene = document.getElementById("sunScene");
   const moonScene = document.getElementById("moonScene");
+  let clockInterval; // to hold the interval ID
 
   let tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -61,14 +62,27 @@ document.addEventListener("DOMContentLoaded", () => {
         sunrise = new Date(data.results.sunrise),
         sunset = new Date(data.results.sunset);
       updatePhase(now, sunrise, sunset);
-      extra.innerHTML = `<div>Sunrise: ${fmt(sunrise, tz)} | Sunset: ${fmt(
-        sunset,
-        tz
-      )}</div>
-             <div class="mt-1">Current time there: ${fmtFull(now, tz)}</div>
-             <div class="text-xs text-orange-400 mt-1">(PH Time — Sunrise: ${fmtPH(
-               sunrise
-             )}, Sunset: ${fmtPH(sunset)}, Current: ${fmtPH(now)})</div>`;
+      extra.innerHTML = `
+  <div>Sunrise: ${fmt(sunrise, tz)} | Sunset: ${fmt(sunset, tz)}</div>
+  <div class="mt-1">Current time there: <span id="local-time">${fmtFull(
+    now,
+    tz
+  )}</span></div>
+  <div class="text-xs text-orange-400 mt-1">
+    (PH Time — Sunrise: ${fmtPH(sunrise)}, Sunset: ${fmtPH(
+        sunset
+      )}, Current: <span id="ph-time">${fmtPH(now)}</span>)
+  </div>`;
+
+      clearInterval(clockInterval);
+
+      clockInterval = setInterval(() => {
+        const now = new Date();
+        const localTimeEl = document.getElementById("local-time");
+        const phTimeEl = document.getElementById("ph-time");
+        if (localTimeEl) localTimeEl.textContent = fmtFull(now, tz);
+        if (phTimeEl) phTimeEl.textContent = fmtPH(now);
+      }, 1000);
     } catch {
       status.textContent = "⚠️ Error retrieving sun data.";
     }

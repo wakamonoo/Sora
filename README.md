@@ -24,7 +24,7 @@
 
 ## 🚀 Try It Out
 
-Visit the live demo at [debtflix-wakamonoo.vercel.app](https://sora-wakamonoo.vercel.app) :contentReference[oaicite:1]{index=1}
+Visit the live demo at [sora-wakamonoo.vercel.app](https://sora-wakamonoo.vercel.app) :contentReference[oaicite:1]{index=1}
 
 ---
 
